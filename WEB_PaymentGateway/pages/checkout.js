@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import Header from "@/components/Header";
@@ -6,9 +8,37 @@ import OrderSummary from "@/components/OrderSummary";
 import { useCart } from "@/context/CartContext";
 
 // Halaman 2: Checkout
-// TODO: tombol "Continue to Payment" nanti menyimpan Checkout ke DB (api/checkout)
 export default function Checkout() {
   const { items, clearCart } = useCart();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // simpan pesanan ke database, lalu lanjut ke halaman payment
+  async function handleContinue() {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({
+            productId: i.productId,
+            qty: i.qty,
+            gram: i.gram,
+            addons: i.addons,
+          })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Gagal menyimpan pesanan");
+      router.push("/payment?checkoutId=" + data.checkoutId);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="container">
@@ -31,9 +61,10 @@ export default function Checkout() {
             <CartItem key={item.key} item={item} />
           ))}
           <OrderSummary />
-          <Link href="/payment" className="btn-main">
-            Continue to Payment →
-          </Link>
+          {error && <p className="error">{error}</p>}
+          <button className="btn-main" onClick={handleContinue} disabled={loading}>
+            {loading ? "Memproses..." : "Continue to Payment →"}
+          </button>
           <Link href="/" className="back-link">
             ← Tambah menu lain
           </Link>

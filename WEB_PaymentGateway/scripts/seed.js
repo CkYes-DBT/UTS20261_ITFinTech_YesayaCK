@@ -54,11 +54,11 @@ function steak(name, basePerGram, description) {
 }
 
 const products = [
-  steak('Wagyu A5 Ribeye', 4750, 'Wagyu A5 Jepang, marbling tinggi'),
-  steak('Wagyu MB9+ Tenderloin', 2600, 'Wagyu Australia MB9+, sangat empuk'),
-  steak('Dry Aged Ribeye', 1600, 'Dry aged 30 hari'),
-  steak('Prime Tenderloin', 1475, 'US Prime beef tenderloin'),
-  steak('Chicken Steak Fillet', 475, 'Ayam fillet panggang'),
+  steak('Wagyu A5 Ribeye', 9500, 'Wagyu A5 Jepang, marbling tinggi'),
+  steak('Wagyu MB9+ Tenderloin', 4500, 'Wagyu Australia MB9+, sangat empuk'),
+  steak('Dry Aged Ribeye', 3200, 'Dry aged 30 hari'),
+  steak('Prime Tenderloin', 2800, 'US Prime beef tenderloin'),
+  steak('Chicken Steak Fillet', 700, 'Ayam fillet panggang'),
   // Sides (bisa dibeli satuan)
   ...sideMenu.map((s) => ({ ...s, category: 'Sides' })),
   // Dessert
@@ -68,8 +68,8 @@ const products = [
   { name: 'Sparkling Water', price: 35000, category: 'Drinks', description: 'Botol 750ml' },
   { name: 'Iced Lychee Tea', price: 38000, category: 'Drinks', description: 'Teh leci dingin' },
   // Paket
-  { name: 'Paket Wagyu Dinner', price: 680000, category: 'Paket', description: 'Wagyu MB9+ 200gr + truffle fries + molten cake + sparkling water' },
-  { name: 'Paket Couple', price: 799000, category: 'Paket', description: '2 Prime Tenderloin 200gr + 2 sides + 2 minuman' },
+  { name: 'Paket Wagyu Dinner', price: 990000, category: 'Paket', description: 'Wagyu MB9+ 200gr + truffle fries + molten cake + sparkling water' },
+  { name: 'Paket Couple', price: 1190000, category: 'Paket', description: '2 Prime Tenderloin 200gr + 2 sides + 2 minuman' },
 ];
 
 async function main() {
