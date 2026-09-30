@@ -1,15 +1,25 @@
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
-export default function Header() {
+// backHref: kalau diisi, tombol "Back" muncul di kiri
+export default function Header({ backHref }) {
   const { count } = useCart();
   return (
     <header className="header">
-      <Link href="/" className="logo">
-        Ck&apos;sTeak
-      </Link>
+      <div className="header-left">
+        {backHref && (
+          <Link href={backHref} className="back-btn">
+            ‹ Back
+          </Link>
+        )}
+        <Link href="/" className="logo">
+          Ck&apos;sTeak
+          <small>Premium Steakhouse</small>
+        </Link>
+      </div>
       <Link href="/checkout" className="cart-link">
-        🛒 <span className="badge">{count}</span>
+        🛒
+        {count > 0 && <span className="badge">{count}</span>}
       </Link>
     </header>
   );

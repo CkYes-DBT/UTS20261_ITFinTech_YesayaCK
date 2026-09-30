@@ -18,16 +18,33 @@ export function CartProvider({ children }) {
   }, [items]);
 
   // item yang sama (produk + addon sama) digabung qty-nya
-  function addItem(product, addons = []) {
-    const key = product._id + "|" + addons.map((a) => a.name).sort().join(",");
+  // weight = { gram, pricePerGram } khusus steak, harga dasar = gram x pricePerGram
+  // mengembalikan key item, dipakai untuk membatalkan (undo) penambahan
+  function addItem(product, addons = [], weight = null, qty = 1) {
+    const key =
+      product._id + "|" + (weight ? weight.gram : "") + "|" + addons.map((a) => a.name).sort().join(",");
+    const price = weight ? weight.gram * weight.pricePerGram : product.price;
     setItems((prev) => {
       const found = prev.find((i) => i.key === key);
-      if (found) return prev.map((i) => (i.key === key ? { ...i, qty: i.qty + 1 } : i));
+      if (found) return prev.map((i) => (i.key === key ? { ...i, qty: i.qty + qty } : i));
       return [
         ...prev,
-        { key, productId: product._id, name: product.name, price: product.price, qty: 1, addons },
+        {
+          key,
+          productId: product._id,
+          name: product.name,
+          gram: weight ? weight.gram : null,
+          price,
+          qty,
+          addons,
+        },
       ];
     });
+    return key;
+  }
+
+  function removeItem(key) {
+    setItems((prev) => prev.filter((i) => i.key !== key));
   }
 
   function changeQty(key, delta) {
@@ -50,7 +67,7 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, changeQty, clearCart, itemPrice, count, subtotal, tax, total }}
+      value={{ items, addItem, removeItem, changeQty, clearCart, itemPrice, count, subtotal, tax, total }}
     >
       {children}
     </CartContext.Provider>
