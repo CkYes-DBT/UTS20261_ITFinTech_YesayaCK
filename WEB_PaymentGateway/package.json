@@ -9,9 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "mongoose": "^9.10.3",
     "next": "16.3.7",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "xendit-node": "^7.0.0"
   },
   "devDependencies": {
     "eslint": "^9",
