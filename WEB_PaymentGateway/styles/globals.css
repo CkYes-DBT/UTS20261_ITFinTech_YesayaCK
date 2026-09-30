@@ -1,33 +1,13 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+body {
+  background: #f3f3f3;
+  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -35,8 +15,128 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 16px;
+  background: #fff;
+}
+
+/* header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+.badge {
+  background: #333;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 12px;
+}
+
+/* tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+}
+.tab {
+  border: none;
+  background: none;
+  padding: 6px 10px;
+  font-size: 15px;
+}
+.tab.active {
+  font-weight: bold;
+  border-bottom: 2px solid #222;
+}
+
+/* product card */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.card-row {
+  display: flex;
+  gap: 12px;
+}
+.thumb {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #eee;
+}
+.card-info h3 {
+  font-size: 16px;
+}
+.price {
+  font-weight: bold;
+  margin: 4px 0;
+}
+.desc {
+  font-size: 13px;
+  color: #777;
+}
+.card-actions {
+  text-align: right;
+  margin-top: 8px;
+}
+.addons {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ccc;
+  font-size: 14px;
+}
+.addons label {
+  display: block;
+  margin: 4px 0;
+}
+.addon-title {
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+/* buttons */
+.btn-small {
+  border: 1px solid #333;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+.btn-main {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  background: #444;
+  color: #fff;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.error {
+  color: #c00;
+  margin-bottom: 12px;
 }
