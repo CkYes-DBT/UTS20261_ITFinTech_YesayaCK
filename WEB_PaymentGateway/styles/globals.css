@@ -11,6 +11,11 @@
   --gold-gradient: linear-gradient(135deg, #ecd19a 0%, #d4af6a 45%, #a8853f 100%);
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Inter", "Segoe UI", Arial, sans-serif;
+  --header-h: 70px; /* tinggi header, dipakai agar tab kategori menempel tepat di bawahnya */
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 * {
@@ -48,12 +53,13 @@ button {
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: var(--header-h);
   margin: 0 -18px;
-  padding: 14px 18px;
+  padding: 0 18px;
   background: rgba(11, 10, 9, 0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
@@ -169,11 +175,19 @@ button {
 
 /* ---------- tabs ---------- */
 .tabs {
+  position: sticky;
+  top: var(--header-h); /* menempel di bawah header saat halaman di-scroll */
+  z-index: 15;
   display: flex;
   gap: 10px;
   overflow-x: auto;
-  padding: 20px 0 16px;
+  margin: 0 -18px 16px;
+  padding: 12px 18px;
+  background: rgba(11, 10, 9, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 .tabs::-webkit-scrollbar {
   display: none;
@@ -489,7 +503,7 @@ button {
 /* bar keranjang di bawah */
 .cart-bar {
   position: fixed;
-  bottom: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 36px);
@@ -718,4 +732,95 @@ button {
   text-align: center;
   color: var(--muted);
   padding: 30px 0;
+}
+
+/* ---------- responsive (HP) ---------- */
+/* input min 16px agar iPhone tidak zoom otomatis saat mengetik */
+.input {
+  font-size: 16px;
+}
+.tab,
+.btn-small,
+.btn-main,
+.method,
+.stepper button {
+  touch-action: manipulation;
+}
+
+@media (max-width: 420px) {
+  :root {
+    --header-h: 64px;
+  }
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .header,
+  .tabs,
+  .hero {
+    margin-left: -14px;
+    margin-right: -14px;
+  }
+  .header {
+    padding: 0 14px;
+  }
+  .tabs {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .logo {
+    font-size: 26px;
+  }
+  .back-btn {
+    padding: 6px 10px;
+  }
+  .hero {
+    padding: 30px 18px 26px;
+  }
+  .hero h1 {
+    font-size: 32px;
+  }
+  .card-image {
+    height: 170px;
+  }
+  .card-body {
+    padding: 14px;
+  }
+  .card-body h3 {
+    font-size: 22px;
+  }
+  .price {
+    font-size: 20px;
+  }
+  .weight-grid {
+    gap: 6px;
+  }
+  .weight {
+    padding: 8px 2px;
+    font-size: 10px;
+  }
+  .weight strong {
+    font-size: 13px;
+  }
+  .card-foot {
+    flex-wrap: wrap;
+  }
+  .cart-bar {
+    width: calc(100% - 28px);
+    padding: 14px 18px;
+    font-size: 13px;
+  }
+  .cart-item {
+    flex-wrap: wrap;
+  }
+  .item-total {
+    width: 100%;
+    text-align: right;
+  }
+  .summary {
+    padding: 16px;
+  }
+  .summary-row.total {
+    font-size: 21px;
+  }
 }

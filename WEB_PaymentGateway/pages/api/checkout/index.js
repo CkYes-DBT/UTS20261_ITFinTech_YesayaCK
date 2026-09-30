@@ -29,9 +29,14 @@ export default async function handler(req, res) {
     // harga dihitung ulang dari database, bukan dari data browser
     const items = [];
     for (const c of cartItems) {
-      const product = await Product.findById(c.productId);
+      const product = mongoose.isValidObjectId(c.productId) ? await Product.findById(c.productId) : null;
       const qty = Number(c.qty);
-      if (!product || !(qty > 0)) return res.status(400).json({ message: 'Item tidak valid' });
+      if (!product) {
+        return res.status(400).json({ message: 'Menu sudah tidak tersedia, kosongkan keranjang lalu pilih ulang' });
+      }
+      if (!Number.isInteger(qty) || qty < 1 || qty > 99) {
+        return res.status(400).json({ message: 'Jumlah pesanan tidak valid' });
+      }
 
       let price = product.price;
       let gram = null;

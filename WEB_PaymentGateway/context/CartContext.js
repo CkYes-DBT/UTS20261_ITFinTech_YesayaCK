@@ -5,17 +5,27 @@ const TAX_RATE = 0.11; // PPN 11%
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [loaded, setLoaded] = useState(false); // true setelah keranjang dibaca dari localStorage
 
   // ambil keranjang dari localStorage saat pertama load
   useEffect(() => {
-    const saved = localStorage.getItem("cart");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (saved) setItems(JSON.parse(saved));
+    /* eslint-disable react-hooks/set-state-in-effect */
+    try {
+      const saved = localStorage.getItem("cart");
+      if (saved) setItems(JSON.parse(saved));
+    } catch {
+      // data rusak atau localStorage tidak tersedia: mulai dengan keranjang kosong
+    }
+    setLoaded(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
+    if (!loaded) return;
+    try {
+      localStorage.setItem("cart", JSON.stringify(items));
+    } catch {}
+  }, [items, loaded]);
 
   // item yang sama (produk + addon sama) digabung qty-nya
   // weight = { gram, pricePerGram } khusus steak, harga dasar = gram x pricePerGram
@@ -67,7 +77,7 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, changeQty, clearCart, itemPrice, count, subtotal, tax, total }}
+      value={{ items, loaded, addItem, removeItem, changeQty, clearCart, itemPrice, count, subtotal, tax, total }}
     >
       {children}
     </CartContext.Provider>

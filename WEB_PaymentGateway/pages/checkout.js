@@ -9,7 +9,7 @@ import { useCart } from "@/context/CartContext";
 
 // Halaman 2: Checkout
 export default function Checkout() {
-  const { items, clearCart } = useCart();
+  const { items, loaded, clearCart } = useCart();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,7 +48,9 @@ export default function Checkout() {
       <Header backHref="/" />
       <h1 className="page-title">Checkout</h1>
 
-      {items.length === 0 ? (
+      {!loaded ? (
+        <p className="loading">Memuat keranjang...</p>
+      ) : items.length === 0 ? (
         <div className="empty">
           <p>Keranjang masih kosong.</p>
           <Link href="/" className="back-link">

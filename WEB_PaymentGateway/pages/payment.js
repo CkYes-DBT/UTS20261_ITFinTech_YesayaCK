@@ -30,6 +30,13 @@ export default function Payment() {
       .catch(() => setError("Gagal memuat pesanan"));
   }, [checkoutId]);
 
+  // kalau user kembali dari halaman Xendit (tombol Back), tombol jangan tetap "Memproses..."
+  useEffect(() => {
+    const reset = () => setLoading(false);
+    window.addEventListener("pageshow", reset);
+    return () => window.removeEventListener("pageshow", reset);
+  }, []);
+
   const setField = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   async function handlePay() {
