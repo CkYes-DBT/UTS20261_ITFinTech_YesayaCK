@@ -8,6 +8,7 @@ const CheckoutSchema = new mongoose.Schema(
         name: String,
         price: Number,
         qty: Number,
+        addons: [{ name: String, price: Number }], // saus / side yang dipilih
       },
     ],
     subtotal: Number,
