@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: 'XENDIT_SECRET_KEY belum diisi di .env.local' });
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const invoice = await xendit.Invoice.createInvoice({
       data: {
         externalId,
